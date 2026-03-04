@@ -176,7 +176,7 @@ class CommentPostMixin:
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['post'] = self.post
+        context['post'] = self.post_obj
         return context
 
 
