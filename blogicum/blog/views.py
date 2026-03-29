@@ -133,12 +133,6 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'blog/create.html'
     pk_url_kwarg = 'post_id'
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            post = get_object_or_404(Post, id=kwargs.get('post_id'))
-            return redirect('blog:post_detail', post_id=post.id)
-        return super().dispatch(request, *args, **kwargs)
-
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
@@ -210,8 +204,6 @@ class CommentUpdateView(LoginRequiredMixin, CommentAccessMixin, UpdateView):
 
     def handle_no_permission(self):
         comment = self.get_object()
-        if not self.request.user.is_authenticated:
-            return redirect('blog:post_detail', post_id=comment.post.id)
         return redirect('blog:post_detail', post_id=comment.post.id)
 
     def get_success_url(self):
