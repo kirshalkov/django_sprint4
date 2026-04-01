@@ -14,7 +14,7 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'text', 'pub_date', 'location', 'category', 'image']
         widgets = {
-            'pub_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'pub_date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}, format='%Y-%m-%dT%H:%M'),
             'text': forms.Textarea(attrs={'rows': 5}),
         }
         labels = {
