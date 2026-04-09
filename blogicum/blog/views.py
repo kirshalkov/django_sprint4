@@ -200,15 +200,6 @@ class CommentUpdateView(LoginRequiredMixin, CommentAccessMixin, UpdateView):
     template_name = 'blog/comment.html'
     pk_url_kwarg = 'comment_id'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['post'] = self.object.post
-        context['comment'] = self.object
-        return context
-
-    def handle_no_permission(self):
-        comment = self.get_object()
-        return redirect('blog:post_detail', post_id=comment.post.id)
 
     def get_success_url(self):
         return reverse_lazy('blog:post_detail', kwargs={
@@ -221,10 +212,6 @@ class CommentDeleteView(LoginRequiredMixin, CommentAccessMixin, DeleteView):
     template_name = 'blog/comment.html'
     pk_url_kwarg = 'comment_id'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['post'] = self.object.post
-        return context
 
     def get_success_url(self):
         return reverse_lazy('blog:post_detail', kwargs={
